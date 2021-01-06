@@ -37,6 +37,36 @@ public class myProfilePage {
 	@FindBy(id = "tailBreadcrumbNode")
 	WebElement breadcrumbName;
 
+	@FindBy(xpath = "//a[@id='publisherAttachTextPost']")
+	WebElement linkPost;
+
+	@FindBy(css = "iframe[title='Rich Text Editor, publisherRichTextEditor']")
+	WebElement postFrame;
+
+	@FindBy(css = "body")
+	WebElement inputComment;
+
+	@FindBy(xpath = "//input[@id='publishersharebutton']")
+	WebElement publishersharebutton;
+
+	@FindBy(xpath = "//a[normalize-space()='Add your photo']")
+	WebElement addPhoto;
+
+	@FindBy(xpath = "//iframe[@id='uploadPhotoContentId']")
+	WebElement addPhotoFrame;
+
+	@FindBy(xpath = "//input[@id='j_id0:uploadFileForm:uploadInputFile']")
+	WebElement btnChooseFile;
+
+	@FindBy(xpath = "//input[@id='j_id0:uploadFileForm:uploadBtn']")
+	WebElement btnSaveImage;
+
+	@FindBy(xpath = "//input[@id='j_id0:j_id7:save']")
+	WebElement btnSavePhoto;
+
+	@FindBy(xpath = "//a[@id='deletePhoto']")
+	WebElement deletePhoto;
+
 	public myProfilePage(WebDriver driver) {
 
 		this.driver = driver;
@@ -44,6 +74,49 @@ public class myProfilePage {
 		// This initElements method will create all WebElements
 		PageFactory.initElements(driver, this);
 
+	}
+
+	// Click Delete photo
+	public void clickDeletePhoto() {
+		commonutils.waitExplicitly(5, btnSavePhoto);
+		deletePhoto.click();
+	}
+
+	// Click Save photo button
+	public void clickUploadProfilePhoto() {
+		commonutils.waitExplicitly(5, btnSavePhoto);
+		btnSavePhoto.click();
+	}
+
+	// Click Save photo button
+	public void clickSavePhoto() {
+		commonutils.waitExplicitly(5, btnSaveImage);
+		btnSaveImage.click();
+	}
+
+	// Click Add Photo link
+	public void clickAddPhoto() {
+		commonutils.waitExplicitly(10, addPhoto);
+		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", addPhoto);
+		addPhoto.click();
+	}
+
+	// Click Choose file button
+	public void btnChooseFile(String path) {
+		commonutils.waitExplicitly(10, btnChooseFile);
+		btnChooseFile.sendKeys(path);
+		;
+	}
+
+	// Click Share button to post the comment
+	public void clickShare() {
+		commonutils.waitExplicitly(10, publishersharebutton);
+		publishersharebutton.click();
+	}
+
+	// Enter the comment to be posted
+	public void setComment(String comment) {
+		inputComment.sendKeys(comment);
 	}
 
 	// Get BreadCrumb Name
@@ -55,6 +128,11 @@ public class myProfilePage {
 	public void setLastName(String lname) {
 		inputLastName.clear();
 		inputLastName.sendKeys(lname);
+	}
+
+	// Click PostLink
+	public void postLink() {
+		linkPost.click();
 	}
 
 	// Click SaveAll button
@@ -104,5 +182,29 @@ public class myProfilePage {
 		setLastName(lName);
 		commonutils.logger.log(LogStatus.PASS, "Last name changed");
 		clickSaveAll();
+	}
+
+	public void postAComment(String comment) {
+		postLink();
+		driver.switchTo().frame(postFrame);
+		setComment(comment);
+		driver.switchTo().defaultContent();
+		clickShare();
+		commonutils.logger.log(LogStatus.PASS, "Entered the comment ");
+	}
+
+	public void uploadPhoto(String path) {	
+		if(addPhoto.isDisplayed()) {
+			clickAddPhoto();
+		}
+		else {
+			driver.switchTo().frame(addPhotoFrame);
+			clickDeletePhoto();
+		}
+		driver.switchTo().frame(addPhotoFrame);
+		btnChooseFile(path);
+		clickSavePhoto();
+		clickUploadProfilePhoto();
+		commonutils.logger.log(LogStatus.PASS, "Uploaded photo ");
 	}
 }

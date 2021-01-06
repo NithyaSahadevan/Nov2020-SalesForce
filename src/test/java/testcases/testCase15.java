@@ -5,42 +5,40 @@ import java.io.IOException;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 
-import com.relevantcodes.extentreports.LogStatus;
-
 import pageFactory.homePage;
 import pageFactory.loginPage;
+import pageFactory.myOpportunitiesPage;
 import utils.commonutils;
 
-public class testCase05 {
+public class testCase15 {
 
 	public static void main(String[] args) throws IOException, ParseException {
 		// TODO Auto-generated method stub
 		
-		commonutils.generateReport("/Users/nithya/eclipse-workspace/com.TekArch.Salesforce/salesForceReports/UserNavigationMenu.html", "TC05");
+		commonutils.generateReport("/Users/nithya/eclipse-workspace/com.TekArch.Salesforce/salesForceReports/opportunities.html", "TC15");
 		commonutils.launchBrowser();
 		commonutils.gotoSalesForceUrl();
 		
 		commonutils.isLoginPageLoaded();
-		JSONObject jObject = commonutils.readTestData("tc05");
+		JSONObject jObject = commonutils.readTestData("tc14");
 		String email=(String) jObject.get("email");
 		String password=(String) jObject.get("password");
-		
+					
 		loginPage login = new loginPage(commonutils.driver);
 		login.loginToSalesForce(email, password);
 		
 		homePage home =new homePage(commonutils.driver);
 		home.isHomePageLoaded();
+		home.clickAllTabs();
 		
-		home.clickUserNavigation();
-				
-		commonutils.logger.log(LogStatus.PASS, home.textMyProfile());
-		commonutils.logger.log(LogStatus.PASS, home.textMySettings());
-		commonutils.logger.log(LogStatus.PASS, home.textLogout());
-		commonutils.logger.log(LogStatus.PASS, home.textDeveloperConsole());
+		myOpportunitiesPage opportunities= new myOpportunitiesPage(commonutils.driver);
+		opportunities.clickOpportunities();
+		home.clickAlertWindow();
+		opportunities.viewOpportunities();
+		
 		
 		commonutils.endReport();
 		commonutils.quitBrowser();
-
 	}
 
 }

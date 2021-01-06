@@ -5,42 +5,37 @@ import java.io.IOException;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 
-import com.relevantcodes.extentreports.LogStatus;
-
 import pageFactory.homePage;
 import pageFactory.loginPage;
 import utils.commonutils;
 
-public class testCase05 {
+public class testCase14 {
 
-	public static void main(String[] args) throws IOException, ParseException {
+	public static void main(String[] args) throws IOException, ParseException, InterruptedException {
 		// TODO Auto-generated method stub
-		
-		commonutils.generateReport("/Users/nithya/eclipse-workspace/com.TekArch.Salesforce/salesForceReports/UserNavigationMenu.html", "TC05");
+
+		commonutils.generateReport("/Users/nithya/eclipse-workspace/com.TekArch.Salesforce/salesForceReports/CreateReport.html", "TC14");
 		commonutils.launchBrowser();
 		commonutils.gotoSalesForceUrl();
 		
 		commonutils.isLoginPageLoaded();
-		JSONObject jObject = commonutils.readTestData("tc05");
+		JSONObject jObject = commonutils.readTestData("tc14");
 		String email=(String) jObject.get("email");
 		String password=(String) jObject.get("password");
-		
+		String dateText=(String) jObject.get("dateText");
+		String reportName=(String) jObject.get("reportName");
+		String reportUniqueName=(String) jObject.get("reportUniqueName");
+			
 		loginPage login = new loginPage(commonutils.driver);
 		login.loginToSalesForce(email, password);
 		
 		homePage home =new homePage(commonutils.driver);
 		home.isHomePageLoaded();
 		
-		home.clickUserNavigation();
-				
-		commonutils.logger.log(LogStatus.PASS, home.textMyProfile());
-		commonutils.logger.log(LogStatus.PASS, home.textMySettings());
-		commonutils.logger.log(LogStatus.PASS, home.textLogout());
-		commonutils.logger.log(LogStatus.PASS, home.textDeveloperConsole());
+		home.createReport(dateText, reportName, reportUniqueName);
 		
 		commonutils.endReport();
 		commonutils.quitBrowser();
-
 	}
 
 }

@@ -1,0 +1,75 @@
+{
+	"tc01": {
+		"email": "riya@cts.com",
+		"password": "password@123"
+	},
+	"tc02": {
+		"email": "riya@cts.com",
+		"password": "password@123"
+	},
+	"tc03": {
+		"email": "riya@cts.com",
+		"password": "password@123"
+	},
+	"tc04": {
+		"email": "riya@cts.com",
+		"password": "password@123"
+	},
+	"tc4b": {
+		"email": "riy@cts.com",
+		"password": "password123"
+	},
+	"tc05": {
+		"email": "riya@cts.com",
+		"password": "password@123"
+	},
+	"tc06": {
+		"email": "riya@cts.com",
+		"password": "password@123",
+		"lastName": "Raj",
+		"comment": "Excellent",
+		"photoUrl": "/Users/nithya/eclipse-workspace/com.TekArch.Salesforce/src/test/java/Resources/flower.jpeg"
+	},
+	"tc07": {
+		"email": "riya@cts.com",
+		"password": "password@123",
+		"filePath": "/Users/nithya/Downloads",
+		"fileName": "LoginHistory.csv",
+		"customApp": "Salesforce Chatter",
+		"availableTabs": "Reports",
+		"emailName": "Rekha R"
+	},
+	"tc10": {
+		"email": "riya@cts.com",
+		"password": "password@123",
+		"accountName": "Rakaa R",
+		"accountType": "Technology Partner",
+		"accountPriority": "High"
+	},
+	"tc11": {
+		"email": "riya@cts.com",
+		"password": "password@123",
+		"viewName": "Alex",
+		"uniqueViewName": "123"
+	},
+	"tc12": {
+		"email": "riya@cts.com",
+		"password": "password@123",
+		"field": "Account Name",
+		"operator": "contains",
+		"value": "a"
+	},
+	"tc13": {
+		"email": "riya@cts.com",
+		"password": "password@123",
+		"searchText": "Rakaa R"
+	},
+	"tc14": {
+		"email": "riya@cts.com",
+		"password": "password@123",
+		"accgeneral": "Created Date",
+		"dateText": "12/05/2021",
+		"reportName": "Selenium",
+		"reportUniqueName": "Hackath"
+	}
+}

@@ -1,5 +1,10 @@
 package testcases;
 
+import java.io.IOException;
+
+import org.json.simple.JSONObject;
+import org.json.simple.parser.ParseException;
+
 import com.relevantcodes.extentreports.LogStatus;
 
 import pageFactory.loginPage;
@@ -7,7 +12,7 @@ import utils.commonutils;
 
 public class testCase04B {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException, ParseException {
 		// TODO Auto-generated method stub
 		
 		commonutils.generateReport("/Users/nithya/eclipse-workspace/com.TekArch.Salesforce/salesForceReports/InvalidCredentials.html", "TC04B");
@@ -15,9 +20,13 @@ public class testCase04B {
 		commonutils.gotoSalesForceUrl();
 		
 		commonutils.isLoginPageLoaded();
+		JSONObject jObject = commonutils.readTestData("tc4b");
+		String email=(String) jObject.get("email");
+		String password=(String) jObject.get("password");
+		
 		loginPage login = new loginPage(commonutils.driver);
-		login.setUserName("riy@cts.com");
-		login.setPassword("password");
+		login.setUserName(email);
+		login.setPassword(password);
 		login.clickLogin();
 		
 		String str = login.getInvalidErrorMsg();
