@@ -5,37 +5,48 @@ import java.io.IOException;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 
+import com.relevantcodes.extentreports.LogStatus;
+
+import pageFactory.contactsPage;
 import pageFactory.homeAndAccountPages;
 import pageFactory.loginPage;
 import utils.commonutils;
 
-public class testCase03 {
+public class testCase26 {
 
 	public static void main(String[] args) throws IOException, ParseException, InterruptedException {
 		// TODO Auto-generated method stub
-
-		commonutils.generateReport("/Users/nithya/eclipse-workspace/com.TekArch.Salesforce/salesForceReports/RemembeMe.html", "TC03");
+		
+		commonutils.generateReport("/Users/nithya/eclipse-workspace/com.TekArch.Salesforce/salesForceReports/createnewview_contact.html", "TC26");
 		commonutils.launchBrowser();
 		commonutils.gotoSalesForceUrl();
 		
 		commonutils.isLoginPageLoaded();
-		JSONObject jObject = commonutils.readTestData("tc03");
+		JSONObject jObject = commonutils.readTestData("tc14");
 		String email=(String) jObject.get("email");
 		String password=(String) jObject.get("password");
-		
+					
 		loginPage login = new loginPage(commonutils.driver);
-		login.setUserName(email);
-		login.setPassword(password);
+		login.loginToSalesForce(email, password);
 		
-		login.selectRememberMe();
-		login.clickLogin();
-		
+
 		homeAndAccountPages home =new homeAndAccountPages(commonutils.driver);
 		home.isHomePageLoaded();
+		home.clickAllTabs();
+
+		contactsPage contacts = new contactsPage(commonutils.driver);
+		contacts.clickLinkContacts();
+		home.clickAlertWindow();
+		
+		contacts.clickCreateNewView();
+		contacts.setViewName("Priya");
+		contacts.setUniqueViewName("RR");
+		contacts.clickSaveView();
+		
+		commonutils.logger.log(LogStatus.PASS, "New view in contacts created ");
+		
 		home.logout();
 		
-		commonutils.isLoginPageLoaded();
-		login.getSavedUserName().contains(email);
 		
 		commonutils.endReport();
 		commonutils.quitBrowser();

@@ -5,7 +5,7 @@ import java.io.IOException;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 
-import pageFactory.homePage;
+import pageFactory.homeAndAccountPages;
 import pageFactory.loginPage;
 import utils.commonutils;
 
@@ -28,7 +28,7 @@ public class testCase11 {
 		loginPage login = new loginPage(commonutils.driver);
 		login.loginToSalesForce(email, password);
 		
-		homePage home =new homePage(commonutils.driver);
+		homeAndAccountPages home =new homeAndAccountPages(commonutils.driver);
 		home.isHomePageLoaded();
 		
 		

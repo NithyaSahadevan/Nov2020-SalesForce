@@ -39,6 +39,7 @@ public class mySettingsPage {
 	WebElement dropdownCustomApp;
 
 	@FindBy(xpath = "//select[@id='duel_select_0']")
+	public
 	WebElement dropdownAvailableTabs;
 
 	@FindBy(xpath = "//img[@title='Add']")
@@ -73,7 +74,15 @@ public class mySettingsPage {
 
 	@FindBy(xpath = "//input[@id='testbtn']")
 	WebElement openTestReminder;
-
+	
+	
+	@FindBy(css = "input[title='Customize My Tabs']")
+	WebElement btnCustomizeMyTab;
+	
+	@FindBy(xpath = "//img[@title='Remove']")
+	WebElement clickLeftArrow;
+	
+	
 	public mySettingsPage(WebDriver driver) {
 
 		this.driver = driver;
@@ -82,6 +91,22 @@ public class mySettingsPage {
 		PageFactory.initElements(driver, this);
 
 	}
+	
+	// Click Left Arrow
+		public void clickLeftArrow() {
+
+			commonutils.waitExplicitly(5, clickLeftArrow);
+			clickLeftArrow.click();
+		}
+
+	
+	// Click CustomizeMyTab btn
+		public void clickCustomizeMyTab() {
+
+			commonutils.waitExplicitly(5, btnCustomizeMyTab);
+			btnCustomizeMyTab.click();
+		}
+
 
 	// Click openTestReminder
 	public void clickOpenTestReminder() {
@@ -144,7 +169,7 @@ public class mySettingsPage {
 
 		commonutils.waitExplicitly(5, dropdownSelectedTabs);
 		Select select = new Select(dropdownSelectedTabs);
-		// select.selectByVisibleText(selectedTabs);
+		select.selectByVisibleText(selectedTabs);
 	}
 
 	// Select from dropdown Available Tabs

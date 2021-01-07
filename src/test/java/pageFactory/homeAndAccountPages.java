@@ -4,6 +4,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.openqa.selenium.Alert;
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -20,7 +21,7 @@ import com.relevantcodes.extentreports.LogStatus;
 
 import utils.commonutils;
 
-public class homePage {
+public class homeAndAccountPages {
 	WebDriver driver;
 
 	@FindBy(id = "userNavLabel")
@@ -133,23 +134,47 @@ public class homePage {
 
 	@FindBy(xpath = "//input[@name='reportName']")
 	WebElement txtReportName;
-	
+
 	@FindBy(xpath = "//input[@name='reportDevName']")
 	WebElement txtReportUniqueName;
 
 	@FindBy(xpath = "//button[contains(text(),'Save and Run Report')]")
 	WebElement btnSaveAndRunReport;
-	 
-	/*
-	 * ((JavascriptExecutor)driver).executeScript
-	 * ("document.getElementById('fromDate').removeAttribute('readonly',0);"); //
-	 * Enables the from date box
-	 * 
-	 * WebElement fromDateBox= driver.findElement(By.id("fromDate"));
-	 * fromDateBox.clear(); fromDateBox.sendKeys("8-Dec-2014");
-	 */
 
-	public homePage(WebDriver driver) {
+	@FindBy(xpath = "//li[@id='home_Tab']")
+	WebElement homeTab;
+
+	@FindBy(xpath = "//h1[@class='currentStatusUserName']")
+	WebElement linkProfileName;
+
+	@FindBy(css = "span[class='pageDescription'] a")
+	WebElement linkCurrentDate;
+
+	@FindBy(css = "img[title='Subject Combo (New Window)']")
+	WebElement imageSubject;
+
+	@FindBy(xpath = "//li[@class='listItem4']//a")
+	WebElement selectSubject;
+
+	@FindBy(xpath = "//input[@id='EndDateTime_time']")
+	WebElement textEndTime;
+
+	@FindBy(xpath = "//td[@id='topButtonRow']//input[@title='Save']")
+	WebElement btnSaveEvent;
+
+	@FindBy(xpath = "//input[@id='IsRecurrence']")
+	WebElement chkRecurrence;
+	
+	@FindBy(xpath = "//label[normalize-space()='Weekly']")
+	WebElement radioRecurrence;
+	
+	@FindBy(xpath = "//input[@id='RecurrenceEndDateOnly']")
+	WebElement inputRecurrenceEndDate;
+	
+	private String linkTime = "//a[normalize-space()='XXXX']";
+	
+
+	public homeAndAccountPages(WebDriver driver) {
 
 		this.driver = driver;
 
@@ -157,33 +182,128 @@ public class homePage {
 		PageFactory.initElements(driver, this);
 
 	}
-	
-	// Click save and run report
-		public void clickSaveAndRunReport() {
 
-			commonutils.waitExplicitly(5, btnSaveAndRunReport);
-			btnSaveAndRunReport.sendKeys(Keys.RETURN);
-			//Actions action = new Actions(driver);
-			//action.moveToElement(btnSaveAndRunReport).build().perform();
-			//action.perform();
+	// set close date
+		public void setRecurrenceEndDate(String date) {
+
+			commonutils.waitExplicitly(5, inputRecurrenceEndDate);
+			inputRecurrenceEndDate.sendKeys(date);
 
 		}
-	
-	// set unique report name
-		public void setUniqueReportName(String reportUniqueName) {
+		
+	// Click Save Event
+			public void selectRadioRecurrence() {
 
-				commonutils.waitExplicitly(5, txtReportUniqueName);
-				txtReportUniqueName.sendKeys(reportUniqueName);
+				commonutils.waitExplicitly(10, radioRecurrence);
+				radioRecurrence.click();
 
 			}
+			
+	// Click Save Event
+		public void clickChkRecurrence() {
+
+			commonutils.waitExplicitly(10, chkRecurrence);
+			chkRecurrence.click();
+
+		}
+		
+	// Click Save Event
+	public void clickSaveEvent() {
+
+		commonutils.waitExplicitly(10, btnSaveEvent);
+		btnSaveEvent.click();
+
+	}
+
+	// set close date
+	public void setEndTime(String endtime) {
+
+		commonutils.waitExplicitly(5, textEndTime);
+		textEndTime.clear();
+		textEndTime.sendKeys(endtime);
+
+	}
+
+	// Click selet Subject
+	public void clickSeletSubject() {
+
+		commonutils.waitExplicitly(10, selectSubject);
+		selectSubject.click();
+
+	}
+
+	// Click imageSubject
+	public void clickImageSubject() {
+
+		commonutils.waitExplicitly(10, imageSubject);
+		imageSubject.click();
+
+	}
+
+	private WebElement prepareWebElementWithDynamicXpath(String xpathValue, String substitutionValue) {
+
+		return driver.findElement(By.xpath(linkTime.replace("XXXX", substitutionValue)));
+	}
+
+	public void clickLinkTime(String time) {
+
+		WebElement linkDynTime = prepareWebElementWithDynamicXpath(linkTime, time);
+		commonutils.waitExplicitly(10, linkDynTime);
+		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", linkDynTime);
+		linkDynTime.click();
+
+	}
+
+	// Click current date
+	public void clickCurrentDate() {
+
+		commonutils.waitExplicitly(10, linkCurrentDate);
+		linkCurrentDate.click();
+
+	}
+
+	// ClickProfile name
+	public void clickProfileName() {
+
+		commonutils.waitExplicitly(10, linkProfileName);
+		linkProfileName.click();
+
+	}
+
+	// Click home tab
+	public void clickHomeTab() {
+
+		commonutils.waitExplicitly(5, homeTab);
+		homeTab.click();
+
+	}
+
+	// Click save and run report
+	public void clickSaveAndRunReport() {
+
+		commonutils.waitExplicitly(5, btnSaveAndRunReport);
+		btnSaveAndRunReport.sendKeys(Keys.RETURN);
+		// Actions action = new Actions(driver);
+		// action.moveToElement(btnSaveAndRunReport).build().perform();
+		// action.perform();
+
+	}
+
+	// set unique report name
+	public void setUniqueReportName(String reportUniqueName) {
+
+		commonutils.waitExplicitly(5, txtReportUniqueName);
+		txtReportUniqueName.sendKeys(reportUniqueName);
+
+	}
 
 	// set report name
 	public void setReportName(String reportName) {
 
-			commonutils.waitExplicitly(5, txtReportName);
-			txtReportName.sendKeys(reportName);
+		commonutils.waitExplicitly(5, txtReportName);
+		txtReportName.sendKeys(reportName);
 
-		}
+	}
 
 	// Click save report
 	public void clickCreatedDate() {
@@ -426,6 +546,7 @@ public class homePage {
 	// Click User Navigation
 	public void clickUserNavigation() {
 
+		commonutils.waitExplicitly(5, userNavigtion);
 		userNavigtion.click();
 
 	}
@@ -579,7 +700,7 @@ public class homePage {
 		Thread.sleep(3000);
 		clickSaveAndRunReport();
 		Thread.sleep(3000);
-	
+
 		commonutils.logger.log(LogStatus.PASS, "Report generated");
 	}
 }
